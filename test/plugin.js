@@ -5,7 +5,7 @@ var chai = require('chai');
 
 var assert = chai.assert;
 
-var should = chai.should();
+//var should = chai.should();
 
 var plugin, comic, chapter;
 

@@ -2,10 +2,10 @@
  * dependencies
  */
 
-var _           = require('lodash')
-  , Promise     = require('bluebird')
-  , cheerio     = require('cheerio')
-  , superagent  = require('superagent');
+var _           = require('lodash'),
+    Promise     = require('bluebird'),
+    cheerio     = require('cheerio'),
+    superagent  = require('superagent');
 
 
 /**

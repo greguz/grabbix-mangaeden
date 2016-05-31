@@ -2,9 +2,9 @@
  * dependencies
  */
 
-var _       = require('lodash')
-  , Promise = require('bluebird')
-  , utils   = require('../libs/utils');
+var _       = require('lodash'),
+    Promise = require('bluebird'),
+    utils   = require('../libs/utils');
 
 
 /**
@@ -46,8 +46,11 @@ var loadMangaList = function(language) {
   // launch web request
   return utils.ajax(api, { dataType: 'json' }).then(function(data) {
 
-    // save result to cache and return
-    return cache[ language ] = data.manga || [];
+    // save result to cache
+    cache[ language ] = _.get(data, 'manga') || [];
+
+    // return cached data
+    return cache[ language ];
 
   });
 

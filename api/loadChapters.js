@@ -2,9 +2,9 @@
  * dependencies
  */
 
-var _       = require('lodash')
-  , moment  = require('moment')
-  , utils   = require('../libs/utils');
+var _       = require('lodash'),
+    moment  = require('moment'),
+    utils   = require('../libs/utils');
 
 
 /**
@@ -20,8 +20,10 @@ var loadChapters = function(comic, add, done) {
   utils.ajax(comic.url, { dataType: 'html' }).then(function($) {
 
     $('tr').each(function() {
-      var $tr   = $(this)
-        , link  = $tr.find('a.chapterLink');
+
+      var $tr = $(this);
+
+      var link = $tr.find('a.chapterLink');
 
       if (link.length <= 0) return;
 
@@ -31,9 +33,13 @@ var loadChapters = function(comic, add, done) {
 
       var title = $tr.find('b').text();
 
-      if (_.startsWith(title, number)) title = title.substr(number.length).trim();
+      if (_.startsWith(title, number)) {
+        title = title.substr(number.length).trim();
+      }
 
-      if (_.startsWith(title, ':')) title = title.substr(1).trim();
+      if (_.startsWith(title, ':')) {
+        title = title.substr(1).trim();
+      }
 
       add({
         language  : comic.language,
@@ -43,6 +49,7 @@ var loadChapters = function(comic, add, done) {
         url       : 'http://www.mangaeden.com' + url,
         added     : moment($tr.find('td.chapterDate').html(), 'MMM D, YYYY').toDate()
       });
+
     });
 
   }).then(function() {

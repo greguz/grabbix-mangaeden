@@ -1,0 +1,11 @@
+{
+  "eqeqeq": true,
+  "freeze": true,
+  "latedef": true,
+  "noarg": true,
+  "undef": true,
+  "unused": true,
+  "quotmark": "single",
+  "node": true,
+  "mocha": true
+}
