@@ -1,0 +1,44 @@
+{
+  "name": "grabbix-mangaeden",
+  "version": "0.1.0",
+  "description": "Manga Eden plugin for GRABBIX",
+  "main": "libs/plugin.js",
+  "keywords": [
+    "grabbix"
+  ],
+  "dependencies": {
+    "bluebird": "^3.3.4",
+    "cheerio": "^0.20.0",
+    "lodash": "^4.11.2",
+    "moment": "^2.12.0",
+    "superagent": "^1.8.3"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  },
+  "author": {
+    "name": "Giacomo Gregoletto",
+    "email": "gregolettogiacomo@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/greguz/grabbix-mangaeden.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha",
+    "bundle": "./node_modules/.bin/browserify --node -s module libs/plugin.js > grabbix-mangaeden.js"
+  },
+  "grabbix": {
+    "label": "Manga Eden",
+    "url": "http://www.mangaeden.com",
+    "languages": [
+      "en",
+      "it"
+    ],
+    "thumbnail": "http://cdn.mangaeden.com/images/logo2.png",
+    "pageDirection": "RTL"
+  }
+}

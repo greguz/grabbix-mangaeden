@@ -1,0 +1,11 @@
+# Node.js dependencies folder
+node_modules
+
+# NPM log file
+npm-debug.log
+
+# IntelliJ IDEA IDEs
+/.idea
+
+# bundled plugin
+/*.js
