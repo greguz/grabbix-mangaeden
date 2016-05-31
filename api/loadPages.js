@@ -15,7 +15,7 @@ var utils = require('../libs/utils');
 
 var loadPages = function(chapter, add, done) {
 
-  return utils.ajax(chapter.url, { dataType: 'html' }).then(function($) {
+  return utils.getDOM(chapter.url).then(function($) {
 
     return $('select#pageSelect option').map(function() {
       return 'http://www.mangaeden.com' + $(this).attr('value');
@@ -23,7 +23,7 @@ var loadPages = function(chapter, add, done) {
 
   }).map(function(url) {
 
-    return utils.ajax(url, { dataType: 'html' }).then(function($) {
+    return utils.getDOM(url).then(function($) {
 
       var data = url.split('/');
 
@@ -33,6 +33,10 @@ var loadPages = function(chapter, add, done) {
       });
 
     });
+
+  }, {
+
+    concurrency: 3
 
   }).then(function() {
 

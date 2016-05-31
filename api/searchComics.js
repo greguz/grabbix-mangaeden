@@ -44,7 +44,7 @@ var loadMangaList = function(language) {
   var api = 'https://www.mangaeden.com/api/list/' + langID + '/';
 
   // launch web request
-  return utils.ajax(api, { dataType: 'json' }).then(function(data) {
+  return utils.getJSON(api).then(function(data) {
 
     // save result to cache
     cache[ language ] = _.get(data, 'manga') || [];
@@ -67,7 +67,7 @@ var loadMangaList = function(language) {
 var loadManga = function(url) {
 
   // get manga's page HTML
-  return utils.ajax(url, { dataType: 'html' }).then(function($) {
+  return utils.getDOM(url).then(function($) {
 
     var author, artist;
 

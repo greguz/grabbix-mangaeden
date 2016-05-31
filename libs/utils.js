@@ -9,27 +9,22 @@ var _           = require('lodash'),
 
 
 /**
- * do ajax request
+ * create a configured agent
  *
- * @param {String} url                  target url
+ * @param {String} url                      url to request
  * @param {Object} [options]
- * @param {String} [options.method]     request method, default 'GET'
- * @param {Object} [options.headers]    custom request headers
- * @param {String} [options.dataType]   'text', 'json', 'binary' or 'html', default 'text'
- * @param {Object} [options.data]
- * @return {Promise}
+ * @param {String} [options.method='GET']   request method
+ * @param {Object} [options.headers]        request headers as raw object
+ * @return {*}                              superagent instance
  */
 
-var ajax = function(url, options) { // TODO split/simplify this function
+var createAgent = function(url, options) {
 
   // set default options
   options = _.defaults(options, {
 
     // request method
     method: 'GET',
-
-    // expected response type
-    dataType: 'text',
 
     // custom request headers
     headers: {
@@ -47,29 +42,20 @@ var ajax = function(url, options) { // TODO split/simplify this function
   // set request headers
   agent.set(options.headers);
 
-  // requests json response
-  if (options.dataType === 'json') agent.accept('json');
+  // return configured agent
+  return agent;
 
-  // if binary request add parsing middleware
-  if (options.dataType === 'binary') agent.parse(function(res, callback) {
+};
 
-    // set encoding
-    res.setEncoding('binary');
 
-    // set initial data
-    res.data = '';
+/**
+ * execute agent request as promise
+ *
+ * @param {*} agent     superagent instance
+ * @return {Promise}
+ */
 
-    // listen for incoming data
-    res.on('data', function (chunk) {
-      res.data += chunk;
-    });
-
-    // listen for request end
-    res.on('end', function () {
-      callback(null, new Buffer(res.data, 'binary'));
-    });
-
-  });
+var launchAgent = function(agent) {
 
   // return new promise
   return new Promise(function(resolve, reject) {
@@ -78,33 +64,66 @@ var ajax = function(url, options) { // TODO split/simplify this function
     agent.end(function(err, res) {
 
       // reject promise on error
-      if (err) return reject(err);
-
-      // response
-      var body = res.body;
-
-      // parse response (options.dataType)
-      if (options.dataType === 'json') {
-
-        // parse JSON
-        if (_.isString(body)) body = JSON.parse(body);
-
-      } else if (options.dataType === 'html') {
-
-        // instance cheerio (like jQuery)
-        body = cheerio.load(res.text);
-
-      } else if (options.dataType === 'binary') {
-
-        // get response buffer
-        body = res.data;
-
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
       }
 
-      // resolve promise
-      resolve(body);
-
     });
+
+  });
+
+};
+
+
+/**
+ * perform JSON request
+ *
+ * @return {Promise}
+ */
+
+var getJSON = function(url, options) {
+
+  // get base-configured agent
+  var agent = createAgent(url, options);
+
+  // add JSON request config
+  agent.accept('json');
+
+  // execute request
+  return launchAgent(agent).then(function(res) {
+
+    // get response body
+    var body = res.body;
+
+    // ensure parsed JSON object
+    if (_.isString(body)) body = JSON.parse(body);
+
+    // return parsed response body
+    return body;
+
+  });
+
+};
+
+
+/**
+ * get and parse HTML page with cheerio
+ *
+ * @return {Promise}
+ */
+
+var getDOM = function(url, options) {
+
+  // get base-configured agent
+  var agent = createAgent(url, options);
+
+  // execute request
+  return launchAgent(agent).then(function(res) {
+
+    // return cheerio instance
+    return cheerio.load(res.text);
 
   });
 
@@ -116,5 +135,8 @@ var ajax = function(url, options) { // TODO split/simplify this function
  */
 
 module.exports = {
-  ajax: ajax
+  createAgent: createAgent,
+  launchAgent: launchAgent,
+  getJSON: getJSON,
+  getDOM: getDOM
 };

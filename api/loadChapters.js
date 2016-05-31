@@ -17,7 +17,7 @@ var _       = require('lodash'),
 
 var loadChapters = function(comic, add, done) {
 
-  utils.ajax(comic.url, { dataType: 'html' }).then(function($) {
+  utils.getDOM(comic.url).then(function($) {
 
     $('tr').each(function() {
 
