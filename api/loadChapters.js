@@ -10,7 +10,7 @@ var _       = require('lodash'),
 /**
  * TODO write docs
  *
- * @param {Object} comic    comic data (from #searchComics)
+ * @param {Object} comic    comic data (from search)
  * @param {Function} add    new chapter found callback
  * @param {Function} done   process end callback
  */

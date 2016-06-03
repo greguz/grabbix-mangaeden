@@ -107,7 +107,7 @@ var loadManga = function(url) {
  * @param {Function} done     function to invoke at the end of searching process
  */
 
-var searchComics = function(match, language, add, done) {
+var searchByTitle = function(match, language, add, done) {
 
   // ensure language
   language = language || 'en';
@@ -157,4 +157,4 @@ var searchComics = function(match, language, add, done) {
  * exports
  */
 
-module.exports = searchComics;
+module.exports = searchByTitle;

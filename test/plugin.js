@@ -1,19 +1,24 @@
+/**
+ * dependencies
+ */
 
-var _ = require('lodash');
-
-var chai = require('chai');
-
-var assert = chai.assert;
-
-//var should = chai.should();
-
-var plugin, comic, chapter;
+var _     = require('lodash'),
+    chai  = require('chai');
 
 
+/**
+ * global vars
+ */
+
+var assert = chai.assert,
+    plugin,
+    comic,
+    chapter;
 
 
-
-
+/**
+ * test definitions
+ */
 
 describe('Manga Eden plugin', function() {
 
@@ -26,7 +31,7 @@ describe('Manga Eden plugin', function() {
   });
 
 
-  describe('#searchComics', function() {
+  describe('#searchByTitle', function() {
 
     // set timeout to 30 seconds
     this.timeout(30 * 1000);
@@ -54,7 +59,7 @@ describe('Manga Eden plugin', function() {
       };
 
       // start plugin API
-      plugin.searchComics(matchTitle, language, onComic, done);
+      plugin.searchByTitle(matchTitle, language, onComic, done);
 
     });
 

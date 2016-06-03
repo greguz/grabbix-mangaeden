@@ -15,7 +15,7 @@ plugin.id = pkg.name;
 
 // add plugin's API
 plugin = _.extend(plugin, {
-  searchComics: require('../api/searchComics'),
+  searchByTitle: require('../api/searchByTitle'),
   loadChapters: require('../api/loadChapters'),
   loadPages: require('../api/loadPages')
 });
